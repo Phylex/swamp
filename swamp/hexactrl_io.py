@@ -1,4 +1,4 @@
-from smbus2 import SMBus
+from smbus2 import SMBus, i2c_msg
 import logging
 import gpiod
 from typing import Union
@@ -60,7 +60,7 @@ class Xil_i2c():
                                               exc_info=True)
                 raise IOError(e.args[0])
 
-    def read(self, address: int, count: int = 1):
+    def read(self, address: int, count: int = 1, internal_address: bytearray = None):
         """
         Read data from the i2c address specified
 
@@ -73,6 +73,17 @@ class Xil_i2c():
         :return: Array of values read for the different bytes as list of ints
         :rtype: list
         """
+        if internal_address is not None:
+            write = i2c_msg.write(address, internal_address)
+            read = i2c_msg.read(address, count)
+            self.transaction_logger.debug(
+                f'Performing an rdwr, writing {internal_address} '
+                f'and reading {count} bytes from i2c addr = {address}')
+            self.bus.i2c_rdwr(write, read)
+            ret = list(read)
+            self.transaction_logger.debug(f'Read returned {ret}')
+            return ret
+
         if count == 1:
             self.transaction_logger.debug(f'Reading SingleByte '
                                           f'from addr = {address}')
@@ -154,7 +165,7 @@ class Xil_gpio():
             config.request_type = gpiod.line_request.DIRECTION_OUTPUT
         else:
             raise ValueError(
-                    "the gpio 'mode' needs to be either 'input' or 'output'")
+                "the gpio 'mode' needs to be either 'input' or 'output'")
         self._pin.request(config)
         self.mode = mode
         self.transaction_logger = logging.getLogger(f'pin_{pin}')
@@ -175,11 +186,11 @@ class Xil_gpio():
         self.transaction_logger.debug(f'Writing pin to {val}')
         if val not in [0, 1]:
             raise ValueError(
-                    'A gpio can only be set "HIGH" => 1, or "LOW" => 0')
+                'A gpio can only be set "HIGH" => 1, or "LOW" => 0')
         if self.mode != 'output':
             raise ValueError(
-                    'To set the output of the pin it needs to '
-                    'be set as "output"')
+                'To set the output of the pin it needs to '
+                'be set as "output"')
         self._pin.set_value(val)
         self.transaction_logger.debug(f'Pin written to {val}')
 
