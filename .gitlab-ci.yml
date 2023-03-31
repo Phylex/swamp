@@ -1,0 +1,91 @@
+stages:
+    #  - test
+    #  - build
+  - docs
+
+    # server_test-job: # runs tests in hexacontroller_sc_server/tests.py
+    #   stage: test
+    #   image: python:latest
+    #   before_script:
+    #     - pip install --upgrade pip
+    #     - pip install -r requirements.txt
+    #     - cd hgcal_utilities/; pip install .; cd ../
+    #   script:
+    #     - cd hexacontroller_sc_server/hexacontroller_sc_server/
+    #     - pytest tests.py
+    #     - exit $?
+    # 
+    # client_test-job: # runs tests in hgcroc_configuration_client/tests.py
+    #   stage: test
+    #   image: python:latest
+    #   before_script:
+    #     - pip install --upgrade pip
+    #     - pip install -r requirements.txt
+    #     - cd hgcal_utilities/; pip install .; cd ../
+    #     - cd hexacontroller_sc_server/; pip install .; cd ../
+    #   script:
+    #     - cd hgcroc_configuration_client/hgcroc_configuration_client/
+    #     - pytest tests.py
+    #     - exit $?
+    # 
+    # utils_test-job: # runs tests in hgcal_utilities/tests.py
+    #   stage: test
+    #   image: python:latest
+    #   before_script:
+    #     - pip install --upgrade pip
+    #     - pip install -r requirements.txt
+    #     - cd hgcal_utilities/; pip install .; cd ../
+    #   script:
+    #     - cd hgcal_utilities/hgcal_utilities/
+    #     - pytest tests.py
+    #     - exit $?
+
+pages: # builds and deploys docs on gitlab pages
+  stage: docs
+  image: python:latest
+  script:
+    - pip install --upgrade pip
+    - pip install sphinx
+    - python -msphinx -b html docs public
+  # gitlab looks in 'public' for files to deply site,
+  # so docs must be built into 'public'
+  artifacts:
+    paths:
+      - public
+
+        # build-package:
+        #   stage: build
+        #   image: python:latest
+        #   rules: 
+        #     - if: ($CI_COMMIT_REF_NAME == "master")
+        #   before_script:
+        #     - pip install --upgrade pip
+        #     - pip install -r requirements.txt
+        #     - pip install twine
+        #     - pip install bump
+        #   script:
+        #     - git config --global user.email "${GIT_USER_EMAIL:-$GITLAB_USER_EMAIL}"
+        #     - git config --global user.name "${GIT_USER_NAME:-$CI_GIT_USERNAME}"
+        #     - git clone "https://${CI_GIT_USERNAME}:${GITLAB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "${CI_COMMIT_SHA}"
+        #     - cd ${CI_COMMIT_SHA}/hexacontroller_sc_server/
+        #     - python -m bump -r -m
+        #     - cd ../hgcroc_configuration_client/
+        #     - python -m bump -r -m
+        #     - cd ../hgcal_utilities/
+        #     - python -m bump -r -m
+        #     - cd ../
+        #     - git add .
+        #     - git commit -m "bump version number"
+        #     - git push -o ci.skip 
+        #     - cd hexacontroller_sc_server/
+        #     - python setup.py sdist bdist_wheel
+        #     - python -m twine check dist/*
+        #     - python -m twine upload dist/* -u $USERNAME -p $PASSWORD
+        #     - cd ../hgcroc_configuration_client/
+        #     - python setup.py sdist bdist_wheel
+        #     - python -m twine check dist/*
+        #     - python -m twine upload dist/* -u $USERNAME -p $PASSWORD
+        #     - cd ../hgcal_utilities/
+        #     - python setup.py sdist bdist_wheel
+        #     - python -m twine check dist/*
+        #     - python -m twine upload dist/* -u $USERNAME -p $PASSWORD
