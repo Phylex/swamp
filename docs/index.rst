@@ -7,6 +7,8 @@ Welcome to swamp's documentation!
 
    readme
    installation
+   architecture
+   api
    usage
    modules
    contributing

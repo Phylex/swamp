@@ -31,10 +31,10 @@ The ``SynchronizedMemory`` class provides a convenient and efficient way to mana
 SWAMP Messages
 --------------
 
-The ``SWAMPMessage`` is a base class for different types of messages used in the Synchronized Write And Memory Protocol. It has two derived classes: ``WriteTransaction`` and ``ReadTransaction``.
+The ``SWAMPMessage`` is a base class for different types of messages used in the Synchronized Write And Memory Protocol. It has two derived classes: ``I2CWriteTransaction`` and ``I2CReadTransaction``.
 
-- ``WriteTransaction`` is used when writing to memory. It contains the address, value, and a unique transaction ID. The transaction ID is used for tracking the transaction until it is committed or encounters an error.
-- ``ReadTransaction`` is used when reading from memory. It contains the address and a unique transaction ID.
+- ``I2CWriteTransaction`` is used when writing to memory. It contains the address, value, and a unique transaction ID. The transaction ID is used for tracking the transaction until it is committed or encounters an error.
+- ``I2CReadTransaction`` is used when reading from memory. It contains the address and a unique transaction ID.
 
 There is also a ``MemReset`` message that is used to signal a reset command to the ``SynchronizedMemory`` instance.
 
