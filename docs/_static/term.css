@@ -1,0 +1,52 @@
+/* Set body font to a monospace font */
+body {
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* Set background to black and text to green */
+body, pre, code, kbd, samp {
+    background-color: black;
+    color: #00ff00;
+}
+
+/* Set background of main content to black */
+.document, .body {
+    background-color: black;
+}
+
+/* Make headers green and underlined */
+h1, h2, h3, h4, h5, h6 {
+    color: #00ff00;
+    border-bottom: 1px solid #00ff00;
+}
+
+/* Add a border to tables */
+table {
+    border: 1px solid #00ff00;
+}
+
+/* Style links to be green and underlined */
+a {
+    color: #00ff00;
+    text-decoration: underline;
+}
+
+/* Style code blocks to have a black background and green text */
+pre, code {
+    background-color: black;
+    color: #00ff00;
+}
+
+/* Style inline code to have a black background and green text */
+:not(pre) > code {
+    background-color: black;
+    color: #00ff00;
+    padding: 0.2em;
+}
+
+/* Style admonition boxes to have a black background and green text */
+.admonition {
+    background-color: black;
+    color: #00ff00;
+    border-left-color: #00ff00;
+}
