@@ -10,7 +10,7 @@ SWAMP
         :target: https://travis-ci.com/phylex/swamp
 
 .. image:: https://readthedocs.org/projects/swamp/badge/?version=latest
-        :target: https://swamp.docs.cern.ch/en/latest/?version=latest
+        :target: https://swamp.docs.cern.ch
         :alt: Documentation Status
 
 
@@ -30,6 +30,10 @@ It is made of a composable set of objects, each representing an ASIC in the hard
 objects mirrors that of the hardware. The Software controls the hardware configuration via the slow-control channel.
 It uses the Transactor (FPGA) Firmware to connect to the hardware.
 
+.. figure:: images/SWAMP-architecture.svg
+   
+    An exaple hardware setup being mirrored by the SWAMP software
+
 Features
 --------
 * Easy to usa API, you do not need to be an ASIC or embedded software expert to configure your detector!
@@ -40,11 +44,6 @@ Features
 * Virtual hardware: Test your setup without the hardware, thanks to software emulation of!
 * Ready to go: SWAMP will be deployed as pypi package for quick and easy integration
 
----
+See the Documentation_ for more detailed info
 
-Credits
--------
-This package was Originaly authored by Alexander Becker with lots of additional help by Armando Bermudez Martinez and firmware support by Martim Rosado.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Documentation: https://swamp.docs.cern.ch

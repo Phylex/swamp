@@ -1,3 +1,5 @@
+.. _`synchronous memory`:
+
 Synchronized Memory Class
 =========================
 

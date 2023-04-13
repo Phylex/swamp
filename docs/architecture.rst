@@ -3,20 +3,24 @@ Architecture and Runtime
 ========================
 
 The SWAMP system is designed to configure a large amount of distributed ICs which are interconnected in a tree like structure. The SWAMP software ensures
-that the configuration commands are propelry encapsulated and encoded so that the Hardware delivers the Configuration along the correct path all the way to
-the intended target in the correct sequence.
+that the configuration commands are propelry encapsulated and encoded so that the Hardware delivers the configuration correctly all the way to the intended target.
 
-The SWAMP system includes a runtime to enable users to easily configure a large detector system via a network accessible API
-while managing a concurrent Hardware with many different encoding levels, the SWAMP software uses sophisticated synchronisation thechniques to enable high performance operation.
+The SWAMP system includes a runtime to enable users to easily configure a large detector system via a minimal API.
+The API abstracts the details of managing a concurrent Hardware with many different encoding levels and IC specific Details, enabling the user to focus on the actual configuration and
+detector properties without needing to be a system expert, greatly increasing productivity.
+SWAMP uses sophisticated synchronisation thechniques to enable high performance operation for large hardware configuration and is able to run multi threaded.
 
 --------------
 
 Architecture
 ============
-SWAMP is at it's core a collection of composable components that are connected to mirror (SWAMP = Software Architectural Mirroring Platform) 
-the slow control topology of an arbitrary detector system using HGCAL ASICs and CERNs GBT series of radiation tolerand transceiver ICs.
+SWAMP is at it's core a collection of composable components that are connected in a way as to mirror (SWAMP = Software Architectural Mirroring Platform) 
+the slow control topology of any detector component.
 SWAMP components communicate with each other by sending messages. Messages represent atomic actions that are to be performed by the IC corresponding to
 the SWAMP-component that generated the message.
+
+.. image:: images/SWAMP-architecture.pdf
+   :alt: an example of a hardware slow control topology together with the SWAMP objects mirroring the hardware.
 
 The SWAMP components are embedded into a multi-thread capable runtime envirounment and wraped by a network accessable API which allows for configuring such a detector or test
 system over a network.
@@ -36,7 +40,7 @@ to the hardware. Messages flow from *upstream* to *downstream*.
 
 At the root of the tree sits a special variant of a transport. It delivers messages directly to the hardware and provides a function to check the hardware for responses.
 The hardware connection should may be implemented in a custom way for any supported platform. Implementing the interface as a character device unix socket is recommended.
-The implementation must provide the transport API described in swamp-api_.
+The implementation must provide the transport API described in :ref:`swamp-api`.
 
 Guarantees about SWAMP transactions
 -----------------------------------
