@@ -61,4 +61,4 @@ provide the ASIC expert with a synchronous programming interface.
 Message propagation and load ballancing
 ---------------------------------------
 The messages are propagated towards the hardware interface in stages. This is done to ensure that the transport nodes have all information needed to perform proper load balancing.
-A global list of all nodes that need to process incoming information is kept for every tree of the SWAMP. When a ``configure`` call is placed to the 
+A global list of all nodes that need to process incoming information is kept for every tree of the SWAMP. When a configure_ call is placed to the 
